@@ -1,0 +1,9 @@
+{
+  "name": "Arbor: Hierarchical Secure Chat",
+  "description": "A secure, invite-only hierarchical messaging platform where communication flows down the tree. Supports text, image, and voice messages with end-to-end encryption.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "majorCapabilities": []
+}

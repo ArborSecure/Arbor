@@ -1,0 +1,22 @@
+# /etc/caddy/Caddyfile — automatic HTTPS via Let's Encrypt, zero cert management.
+# Install caddy (https://caddyserver.com/docs/install), replace the domain,
+# then:  sudo systemctl reload caddy
+#
+# Caddy handles: TLS certificates + renewal, HTTP→HTTPS redirect, and proxying
+# (including the SSE event stream) to the app. Security headers (HSTS etc.) come
+# from the app itself.
+
+chat.example.com {
+	encode zstd gzip
+	# v71 L2: Caddy writes no access log unless a `log` directive is added — keep it
+	# that way (an access log records every client IP and URL, incl. invite codes).
+
+	reverse_proxy 127.0.0.1:3000 {
+		# SSE (/api/events) is a long-lived stream — don't buffer or time it out.
+		flush_interval -1
+	}
+
+	# v72: no `header` block — the app already sends Strict-Transport-Security,
+	# X-Content-Type-Options and Referrer-Policy (helmet). Setting them here too sent
+	# every response two HSTS headers with different max-age values.
+}

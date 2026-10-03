@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --sat: env(safe-area-inset-top);
+  --sar: env(safe-area-inset-right);
+  --sab: env(safe-area-inset-bottom);
+  --sal: env(safe-area-inset-left);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #0a0a0a;
+  color: #e5e5e5;
+  margin: 0;
+  padding: 0;
+  overscroll-behavior-y: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  height: 100dvh;
+  width: 100vw;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overscroll-behavior: none;
+}
+
+#root {
+  height: 100dvh;
+  width: 100vw;
+  overflow: hidden;
+  position: fixed;
+  inset: 0;
+}
+
+.font-mono { font-family: 'JetBrains Mono', monospace; }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; overscroll-behavior: contain; }
+
+input { font-size: 16px !important; }
+@media (min-width: 768px) { input { font-size: inherit !important; } }
+
+.safe-pb { padding-bottom: calc(1rem + var(--sab)); }
+.safe-pt { padding-top: var(--sat); }
+
+/* Data-flow pulse riding the network-tree links */
+.tree-flow { animation: treeflow 1.6s linear infinite; }
+@keyframes treeflow { to { stroke-dashoffset: -17; } }
+@media (prefers-reduced-motion: reduce) { .tree-flow { animation: none; } }
+
+/* Jump-to-reply: briefly highlight the message we scrolled to. */
+.reply-flash { animation: replyflash 1.2s ease-out; border-radius: 0.75rem; }
+@keyframes replyflash {
+  0%, 100% { background-color: transparent; }
+  15% { background-color: rgba(16, 185, 129, 0.22); }
+}
+
+/* iMessage-style tail on the last bubble of a sequential run (and standalone
+   messages). Two pseudo-elements: a bubble-colored blob just past the corner,
+   then a page-colored blob that carves the curved hook. --bub carries the
+   bubble's background so white / dark / etc. all tail correctly. */
+.msg-tail { position: relative; }
+.msg-tail::before, .msg-tail::after { content: ""; position: absolute; bottom: -2px; height: 20px; pointer-events: none; }
+.msg-tail-r::before { right: -8px; width: 18px; background: var(--bub); border-bottom-left-radius: 16px; z-index: 0; }
+.msg-tail-r::after  { right: -18px; width: 18px; height: 21px; background: #0a0a0a; border-bottom-left-radius: 13px; z-index: 1; }
+.msg-tail-l::before { left: -8px; width: 18px; background: var(--bub); border-bottom-right-radius: 16px; z-index: 0; }
+.msg-tail-l::after  { left: -18px; width: 18px; height: 21px; background: #0a0a0a; border-bottom-right-radius: 13px; z-index: 1; }
+
+.send-btn:active { transform: scale(0.9); }
+/* outgoing bubble: rise in with a slight overshoot */
+.msg-in-mine { animation: msg-in-mine 380ms cubic-bezier(0.22, 1.15, 0.36, 1) both; transform-origin: bottom right; }
+@keyframes msg-in-mine {
+  0%   { opacity: 0; transform: translateY(14px) scale(0.82); }
+  60%  { opacity: 1; transform: translateY(-2px) scale(1.03); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+/* incoming bubble: rise + fade */
+.msg-in-other { animation: msg-in-other 320ms cubic-bezier(0.22, 1, 0.36, 1) both; transform-origin: bottom left; }
+@keyframes msg-in-other {
+  0%   { opacity: 0; transform: translateY(10px) scale(0.94); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .msg-in-mine, .msg-in-other { animation: none; }
+}

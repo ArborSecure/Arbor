@@ -1,0 +1,15 @@
+# /etc/systemd/system/arbor-backup.service  (triggered by arbor-backup.timer)
+[Unit]
+Description=Arbor nightly database backup
+
+[Service]
+Type=oneshot
+User=arbor
+Group=arbor
+WorkingDirectory=/opt/arbor
+ExecStart=/usr/bin/node scripts/backup.mjs
+ReadWritePaths=/var/lib/arbor
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true

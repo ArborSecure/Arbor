@@ -1,0 +1,13 @@
+# /etc/systemd/system/arbor-backup.timer
+# Install:  sudo cp deploy/arbor-backup.{service,timer} /etc/systemd/system/
+#           sudo systemctl daemon-reload && sudo systemctl enable --now arbor-backup.timer
+[Unit]
+Description=Nightly Arbor database backup
+
+[Timer]
+OnCalendar=*-*-* 03:30:00
+RandomizedDelaySec=15m
+Persistent=true
+
+[Install]
+WantedBy=timers.target

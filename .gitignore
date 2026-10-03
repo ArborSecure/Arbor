@@ -1,0 +1,27 @@
+node_modules/
+dist/
+db.json
+server-salt.json
+vapid.json
+*.log
+
+# Environment config — contains secrets, never commit this
+.env
+arbor.db
+arbor.db-journal
+arbor.db-wal
+arbor.db-shm
+db.json.migrated
+
+# extra safety
+.env.*
+!.env.example
+*.sqlite
+*.sqlite3
+backups/
+.DS_Store
+.vscode/
+.idea/
+
+#backups
+arbor-prod-backup-*/

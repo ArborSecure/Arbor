@@ -1,0 +1,45 @@
+# /etc/systemd/system/arbor.service
+# Install:  sudo cp deploy/arbor.service /etc/systemd/system/
+#           sudo systemctl daemon-reload && sudo systemctl enable --now arbor
+[Unit]
+Description=Arbor secure chat server
+After=network-online.target postgresql.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=arbor
+Group=arbor
+WorkingDirectory=/opt/arbor
+# v72 B5: production mode. The server then refuses to start unless DATABASE_URL,
+# PUBLIC_ORIGIN (https://), TRUST_PROXY and ARBOR_DATA_DIR are set in .env, and
+# unless its salt matches the database — see PRODUCTION.md.
+Environment=NODE_ENV=production
+ExecStart=/usr/bin/node server.js
+Restart=always
+RestartSec=3
+# SIGTERM triggers the in-app graceful shutdown (snapshot flush); give it time.
+TimeoutStopSec=10
+
+# ── Hardening ────────────────────────────────────────────────────────────────
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+MemoryDenyWriteExecute=false
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+# The ONLY writable paths: the data dir (server-salt.json / vapid.json live there
+# when they aren't set in .env). The app dir stays read-only.
+ReadWritePaths=/var/lib/arbor
+# Bound the process so a leak can't take the box down.
+MemoryMax=1G
+TasksMax=256
+
+[Install]
+WantedBy=multi-user.target

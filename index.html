@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Arbor">
+
+    <!-- High-Resolution iOS Home Screen Icon: Emerald Green on Solid Black -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+    <title>Arbor - Secure Tree Chat</title>
+    <meta name="description" content="Arbor is an end-to-end encrypted messenger built around networks that branch like a tree. The server sees nothing.">
+    <!-- Link previews (iMessage, Instagram, WhatsApp, etc.) read these; crawlers don't run JS.
+         No og:url: this page serves every app URL (invite links included), and a fixed
+         og:url makes some apps rewrite the shared link to it, dropping the invite code. -->
+    <meta property="og:title" content="Arbor - Secure Tree Chat">
+    <meta property="og:description" content="End-to-end encrypted. Structured like a tree. The server sees nothing.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Arbor">
+    <meta property="og:image" content="https://arborsecure.app/og-image.png">
+    <meta property="og:image:secure_url" content="https://arborsecure.app/og-image.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Arbor: private messaging, structured like a tree">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://arborsecure.app/og-image.png">
+    <link rel="manifest" href="/manifest.json">
+    <style>
+      /* Self-contained system font stack — no external font requests (privacy),
+         no third-party CSS (no SRI concern). Names Inter/JetBrains first so a
+         self-hosted @font-face, if added later, is used automatically. */
+      :root{
+        --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+      }
+      body{ font-family: var(--font-sans); }
+    </style>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2310b981' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='9' y='2' width='6' height='6' rx='1'/%3E%3Cpath d='M12 8v4'/%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='M5 12v4'/%3E%3Cpath d='M19 12v4'/%3E%3Crect x='2' y='16' width='6' height='6' rx='1'/%3E%3Crect x='16' y='16' width='6' height='6' rx='1'/%3E%3C/svg%3E">
+
+    <!-- No external fonts or scripts: fully self-contained for privacy. -->
+</head>
+<body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+</body>
+</html>
